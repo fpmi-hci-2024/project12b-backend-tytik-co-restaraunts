@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from app.application.exception import ApplicationError
-from app.domain.common.exception import DomainError
 
 
 @dataclass(eq=False)

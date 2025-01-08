@@ -11,7 +11,7 @@ class Restaurant:
     id: UUID
     name: str
     cuisine_name: str
-    logo_url: str
+    logo_url: str = field(default="")
     is_deleted: bool = field(default=False)
 
 
