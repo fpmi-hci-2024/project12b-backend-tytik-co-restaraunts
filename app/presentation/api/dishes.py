@@ -16,11 +16,6 @@ dish_router = APIRouter(
 
 @dish_router.get("get_dishes/{menu_id}")
 async def get_dishes(
-    menu_id: UUID,
-    mediator: Annotated[QueryMediator, Depends(Stub(QueryMediator))],
-    offset: Annotated[int, Query(ge=0)] = 0,
-    limit: Annotated[int, Query(ge=1, le=1000)] = 1000,
-    order: SortOrder = SortOrder.ASC,
 ): ...
 
 
