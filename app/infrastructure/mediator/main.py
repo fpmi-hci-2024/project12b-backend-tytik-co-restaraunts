@@ -9,6 +9,13 @@ from didiator.interface.utils.di_builder import DiBuilder
 from didiator.middlewares.di import DiScopes, DiMiddleware
 from didiator.middlewares.logging import LoggingMiddleware
 
+from app.application.dish.commands.create_dish import CreateDish, CreateDishHandler
+from app.application.dish.commands.get_dish_by_id import GetDishById, GetDishByIdHandler
+from app.application.dish.commands.get_dishes import GetDishes, GetDishesHandler
+from app.application.dish.commands.get_dish_by_menu_id import (
+    GetDishByMenuId,
+    GetDishByMenuIddHandler,
+)
 from app.application.menu.commands.create_menu import CreateMenu, CreateMenuHandler
 from app.application.menu.commands.get_menu_by_id import GetMenuById, GetMenuByIdHandler
 from app.application.menu.commands.get_menu_by_restaurant_id import (
@@ -68,3 +75,7 @@ def setup_mediator(mediator: Mediator) -> None:
         GetMenuByRestaurantId, GetMenuByRestaurantIddHandler
     )
     mediator.register_command_handler(CreateMenu, CreateMenuHandler)
+    mediator.register_query_handler(GetDishes, GetDishesHandler)
+    mediator.register_query_handler(GetDishByMenuId, GetDishByMenuIddHandler)
+    mediator.register_query_handler(GetDishById, GetDishByIdHandler)
+    mediator.register_command_handler(CreateDish, CreateDishHandler)

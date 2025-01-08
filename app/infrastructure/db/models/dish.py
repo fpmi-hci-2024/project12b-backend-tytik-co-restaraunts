@@ -17,4 +17,7 @@ class Dish(TimeBaseModel):
     name: Mapped[str] = mapped_column(String)
     price: Mapped[decimal.Decimal] = mapped_column(Numeric)
     menu_id: Mapped[uuid.UUID] = mapped_column(UUID)
-    id_deleted: Mapped[bool] = mapped_column(default=False)
+    logo_url: Mapped[str] = mapped_column(String, default="")
+    dishes_type: Mapped[str] = mapped_column(String)
+    ingredients: Mapped[str] = mapped_column(String)
+    is_deleted: Mapped[bool] = mapped_column(default=False)

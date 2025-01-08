@@ -58,7 +58,6 @@ async def get_menu_by_restaurant_id(
     restaurant_id: UUID,
 ):
     menu = await mediator.query(GetMenuByRestaurantId(restaurant_id=restaurant_id))
-    print("@@", menu)
     return OkResponse(result=menu)
 
 
