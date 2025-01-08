@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.9, 3.8]
+        python-version: [3.8, 3.9]
 
     steps:
       - name: Check out repository code
@@ -23,15 +23,23 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+
+      - name: Add Poetry to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        shell: bash
+
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install black pytest
+          poetry --version
+          poetry install
 
       - name: Run black check
         run: |
-          black --check .
+          poetry run black --check .
 
       - name: Run tests
         run: |
-          pytest
+          poetry run pytest
