@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, Query
 from starlette import status
 
 from app.application import dto
-from app.application.dto.restaurant import RestaurantDTO, Restaurant, DeletedRestaurant
+from app.application.dto.restaurant import Restaurant, DeletedRestaurant
 from app.application.restaurant.commands.create_restaurant import CreateRestaurant
 from app.application.restaurant.commands.delete_restaurant import DeleteRestaurant
 from app.application.restaurant.commands.get_restaurant_by_id import GetRestaurantById

@@ -15,5 +15,5 @@ class Restaurant(TimeBaseModel):
     )
     name: Mapped[str] = mapped_column(String, unique=True)
     cuisine_name: Mapped[str] = mapped_column(String)
-    logo_url: Mapped[str] = mapped_column(String)
+    logo_url: Mapped[str] = mapped_column(String, default="")
     is_deleted: Mapped[bool] = mapped_column(default=False)

@@ -1,6 +1,12 @@
 from uuid import UUID
 
-from fastapi import APIRouter
+from didiator import QueryMediator
+from fastapi import APIRouter, Query
+from fastapi.params import Depends
+from sqlalchemy.sql.annotation import Annotated
+
+from app.domain.common.constant import SortOrder
+from app.presentation.providers.stub import Stub
 
 dish_router = APIRouter(
     prefix="/dishes",
@@ -9,7 +15,13 @@ dish_router = APIRouter(
 
 
 @dish_router.get("get_dishes/{menu_id}")
-async def get_dishes(menu_id: UUID): ...
+async def get_dishes(
+    menu_id: UUID,
+    mediator: Annotated[QueryMediator, Depends(Stub(QueryMediator))],
+    offset: Annotated[int, Query(ge=0)] = 0,
+    limit: Annotated[int, Query(ge=1, le=1000)] = 1000,
+    order: SortOrder = SortOrder.ASC,
+): ...
 
 
 @dish_router.post("create_dish/{menu_id}")
