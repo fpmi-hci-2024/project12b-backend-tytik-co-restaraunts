@@ -10,8 +10,7 @@ class BaseValueObject(ABC):
     def __post_init__(self) -> None:
         self._validate()
 
-    def _validate(self) -> None:
-        ...
+    def _validate(self) -> None: ...
 
 
 @dataclass(frozen=True)
@@ -19,4 +18,4 @@ class ValueObject(BaseValueObject, ABC, Generic[V]):
     value: V
 
     def to_raw(self) -> V:
-        return self.value
+        return str(self.value)

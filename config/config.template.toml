@@ -6,7 +6,7 @@ debug = true
 [db]
 host = "postgres"
 port = 5432
-database = "line_provider_db"
+database = "food_delivery"
 user = "admin"
 password = "admin"
 echo = true

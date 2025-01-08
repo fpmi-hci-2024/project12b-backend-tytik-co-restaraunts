@@ -1,13 +1,6 @@
-from fastapi import FastAPI
+import asyncio
 
-app = FastAPI()
+from app.presentation.__main__ import main
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+if __name__ == "__main__":
+    asyncio.run(main())

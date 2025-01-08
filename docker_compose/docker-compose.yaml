@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   api:
     profiles: [ "api" ]
@@ -11,12 +13,17 @@ services:
     command: ["python", "main.py"]
     depends_on:
       - postgres
+      - localstack
     environment:
       - CONFIG_PATH=${CONFIG_PATH:-./config/config.template.toml}
+      - LOCALSTACK_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
     volumes:
       - ..:/app/
     networks:
       - web_api.postgres.network
+
   postgres_migration:
     profiles: [ "migration" ]
     container_name: web_api.postgres_migration
@@ -32,6 +39,7 @@ services:
     environment:
       - CONFIG_PATH=${CONFIG_PATH:-./config/config.template.toml}
     command: [ "python", "-m", "alembic", "upgrade", "head" ]
+
   postgres:
     profiles: [ "api", "migration" ]
     container_name: web_api.postgres
@@ -50,6 +58,22 @@ services:
       POSTGRES_DB: $POSTGRES_DB
     volumes:
       - web_api.postgres.data:/var/lib/postgresql/users:rw
+
+  localstack:
+    profiles: [ "api", "migration" ]
+    container_name: web_api.localstack
+    image: localstack/localstack
+    environment:
+      - SERVICES=s3
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack-data:/tmp/localstack/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web_api.postgres.network
+
 volumes:
   web_api.postgres.data: {}
 networks:

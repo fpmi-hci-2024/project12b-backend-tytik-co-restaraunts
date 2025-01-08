@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from app.application.exception import ApplicationError
+from app.domain.common.exception import DomainError
 
 
 @dataclass(eq=False)
@@ -10,7 +11,9 @@ class RestaurantIdAlreadyExistsError(ApplicationError):
 
     @property
     def title(self) -> str:
-        return f'A restaurant with the "{self.restaurant_id}" restaurant_id already exists'
+        return (
+            f'A restaurant with the "{self.restaurant_id}" restaurant_id already exists'
+        )
 
 
 @dataclass(eq=False)

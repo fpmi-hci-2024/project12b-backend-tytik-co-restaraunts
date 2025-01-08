@@ -1,4 +1,9 @@
-class ApplicationError(Exception):
+from typing import ClassVar
+
+from app.domain.common.exception import AppError
+
+
+class ApplicationError(AppError):
     """Base Application Exception."""
 
     @property
@@ -11,4 +16,12 @@ class UnexpectedError(ApplicationError):
 
 
 class RepoError(UnexpectedError):
+    pass
+
+
+class CommitError(UnexpectedError):
+    pass
+
+
+class RollbackError(UnexpectedError):
     pass

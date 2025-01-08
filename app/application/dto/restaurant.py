@@ -11,7 +11,17 @@ class Restaurant:
     id: UUID
     name: str
     cuisine_name: str
+    logo_url: str
     is_deleted: bool = field(default=False)
+
+
+@dataclass(frozen=True)
+class DeletedRestaurant:
+    id: UUID
+    name: str
+    cuisine_name: str
+    logo_url: str
+    is_deleted: bool
 
 
 RestaurantDTO: TypeAlias = ListItemsDTO[Restaurant]

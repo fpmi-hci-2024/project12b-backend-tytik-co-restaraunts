@@ -15,7 +15,9 @@ class BaseModel(DeclarativeBase):
 class TimeBaseModel(BaseModel):
     __abstract__ = True
 
-    created_at: Mapped[datetime.datetime] = mapped_column(nullable=False, server_default=sql.func.now())
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        nullable=False, server_default=sql.func.now()
+    )
     updated_at: Mapped[datetime.datetime] = mapped_column(
         nullable=False,
         server_default=sql.func.now(),

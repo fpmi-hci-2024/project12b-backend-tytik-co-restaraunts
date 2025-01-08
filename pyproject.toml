@@ -10,6 +10,14 @@ python = "^3.10"
 fastapi = "^0.115.6"
 uvicorn = "^0.33.0"
 sqlalchemy = "^2.0.36"
+didiator = "^0.3.1"
+di = "^0.79.2"
+alembic = "^1.14.0"
+adaptix = "^3.0.0b9"
+toml = "^0.10.2"
+asyncpg = "^0.30.0"
+black = "^24.10.0"
+orjson = "^3.10.12"
 
 
 [build-system]

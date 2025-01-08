@@ -7,5 +7,6 @@ def convert_db_event_model_to_dto(restaurant: Restaurant) -> dto.Restaurant:
         id=restaurant.id,
         name=restaurant.name,
         cuisine_name=restaurant.cuisine_name,
-        is_deleted=restaurant.is_deleted
+        logo_url=restaurant.logo_url,
+        is_deleted=restaurant.is_deleted,
     )
