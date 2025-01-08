@@ -74,7 +74,6 @@ class MenuRepositoryImpl(SqlAlchemyRepository, MenuRepository):
 
         if menu is None:
             raise MenuWithRestaurantIdNotExistError(restaurant_id)
-        print("^^", menu)
         return convert_db_event_model_to_dto(menu)
 
     @exception_mapper

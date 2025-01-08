@@ -9,6 +9,7 @@ from didiator.interface.utils.di_builder import DiBuilder
 from didiator.utils.di_builder import DiBuilderImpl
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 
+from app.application.dish.interface.repository import DishRepository
 from app.application.menu.interface.repository import MenuRepository
 from app.application.restaurant.interface.repository import RestaurantRepository
 from app.application.uow.common import UnitOfWork
@@ -17,6 +18,7 @@ from app.infrastructure.db.main import (
     build_sa_session_factory,
     build_sa_session,
 )
+from app.infrastructure.db.repository.dish import DishRepositoryImpl
 from app.infrastructure.db.repository.menu import MenuRepositoryImpl
 from app.infrastructure.db.repository.restaraunt import RestaurantRepositoryImpl
 from app.infrastructure.uow import build_uow
@@ -82,6 +84,13 @@ def setup_db_factories(di_builder: DiBuilder) -> None:
         bind_by_type(
             Dependent(MenuRepositoryImpl, scope="request"),
             MenuRepository,
+            covariant=True,
+        )
+    )
+    di_builder.bind(
+        bind_by_type(
+            Dependent(DishRepositoryImpl, scope="request"),
+            DishRepository,
             covariant=True,
         )
     )
