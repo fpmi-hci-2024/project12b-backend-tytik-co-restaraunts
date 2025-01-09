@@ -55,15 +55,17 @@ async def get_dishes_by_menu_id(
     limit: Annotated[int, Query(ge=1, le=1000)] = 1000,
     order: SortOrder = SortOrder.ASC,
 ):
-    dishes = await mediator.query(GetDishByMenuId(
-        menu_id=menu_id,
-        filters=GetDishesFilters(deleted if deleted is not None else Empty.UNSET),
-        pagination=Pagination(
-            offset=offset,
-            limit=limit,
-            order=order,
-        ),
-    ))
+    dishes = await mediator.query(
+        GetDishByMenuId(
+            menu_id=menu_id,
+            filters=GetDishesFilters(deleted if deleted is not None else Empty.UNSET),
+            pagination=Pagination(
+                offset=offset,
+                limit=limit,
+                order=order,
+            ),
+        )
+    )
     return OkResponse(result=dishes)
 
 

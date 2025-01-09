@@ -21,10 +21,7 @@ class DishRepository(Protocol):
 
     @abc.abstractmethod
     async def get_dish_by_menu_id(
-        self,
-        menu_id: uuid.UUID,
-        pagination: Pagination,
-        filters: GetDishesFilters
+        self, menu_id: uuid.UUID, pagination: Pagination, filters: GetDishesFilters
     ) -> dto.Dishes:
         pass
 
