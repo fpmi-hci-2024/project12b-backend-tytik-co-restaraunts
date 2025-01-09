@@ -30,9 +30,15 @@ from app.infrastructure.db.repository.base import SqlAlchemyRepository
 class DishRepositoryImpl(SqlAlchemyRepository, DishRepository):
     @exception_mapper
     async def get_dishes(
-        self, pagination: Pagination, filters: GetDishesFilters
+        self,
+        pagination: Pagination,
+        filters: GetDishesFilters,
+        menu_id: uuid.UUID | None = None,
     ) -> dto.Dishes:
-        query = select(Dish)
+        if menu_id:
+            query = select(Dish).where(Dish.menu_id == menu_id)
+        else:
+            query = select(Dish)
         if pagination.order is SortOrder.ASC:
             query = query.order_by(Dish.id.desc())
         else:
@@ -67,14 +73,17 @@ class DishRepositoryImpl(SqlAlchemyRepository, DishRepository):
         return convert_db_event_model_to_dto(dish)
 
     @exception_mapper
-    async def get_dish_by_menu_id(self, menu_id: uuid.UUID) -> dto.Dish:
-        dish: Dish | None = await self.session.scalar(
-            select(Dish).where(Dish.menu_id == menu_id)
+    async def get_dish_by_menu_id(
+        self,
+        menu_id: uuid.UUID,
+        pagination: Pagination,
+        filters: GetDishesFilters
+    ) -> dto.Dishes:
+        return await self.get_dishes(
+            pagination=pagination,
+            filters=filters,
+            menu_id=menu_id
         )
-
-        if dish is None:
-            raise DishWithMenuIdNotExistError(menu_id)
-        return convert_db_event_model_to_dto(dish)
 
     @exception_mapper
     async def create_dish(self, dish: entity.Dish) -> None:

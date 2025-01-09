@@ -46,17 +46,25 @@ async def get_dishes(
 
 @dish_router.get(
     "/get_dish_by_menu_id/",
-    responses={
-        status.HTTP_200_OK: {"model": Dish},
-        status.HTTP_404_NOT_FOUND: {},
-    },
 )
-async def get_menu_by_restaurant_id(
+async def get_dishes_by_menu_id(
     mediator: Annotated[QueryMediator, Depends(Stub(QueryMediator))],
     menu_id: UUID,
+    deleted: bool | None = None,
+    offset: Annotated[int, Query(ge=0)] = 0,
+    limit: Annotated[int, Query(ge=1, le=1000)] = 1000,
+    order: SortOrder = SortOrder.ASC,
 ):
-    dish = await mediator.query(GetDishByMenuId(menu_id=menu_id))
-    return OkResponse(result=dish)
+    dishes = await mediator.query(GetDishByMenuId(
+        menu_id=menu_id,
+        filters=GetDishesFilters(deleted if deleted is not None else Empty.UNSET),
+        pagination=Pagination(
+            offset=offset,
+            limit=limit,
+            order=order,
+        ),
+    ))
+    return OkResponse(result=dishes)
 
 
 @dish_router.get(
@@ -66,7 +74,7 @@ async def get_menu_by_restaurant_id(
         status.HTTP_404_NOT_FOUND: {},
     },
 )
-async def get_menu_by_restaurant_id(
+async def get_dish_by_id(
     mediator: Annotated[QueryMediator, Depends(Stub(QueryMediator))],
     dish_id: UUID,
 ):
