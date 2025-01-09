@@ -22,8 +22,6 @@ class GetDishByMenuIddHandler(QueryHandler[GetDishByMenuId, dto.Dishes]):
 
     async def __call__(self, query: GetDishByMenuId) -> dto.Dishes:
         dishes = await self._repo.get_dish_by_menu_id(
-            menu_id=query.menu_id,
-            pagination=query.pagination,
-            filters=query.filters
+            menu_id=query.menu_id, pagination=query.pagination, filters=query.filters
         )
         return dishes

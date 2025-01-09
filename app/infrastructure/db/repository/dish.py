@@ -74,15 +74,10 @@ class DishRepositoryImpl(SqlAlchemyRepository, DishRepository):
 
     @exception_mapper
     async def get_dish_by_menu_id(
-        self,
-        menu_id: uuid.UUID,
-        pagination: Pagination,
-        filters: GetDishesFilters
+        self, menu_id: uuid.UUID, pagination: Pagination, filters: GetDishesFilters
     ) -> dto.Dishes:
         return await self.get_dishes(
-            pagination=pagination,
-            filters=filters,
-            menu_id=menu_id
+            pagination=pagination, filters=filters, menu_id=menu_id
         )
 
     @exception_mapper
