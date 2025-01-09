@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -31,12 +31,15 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
         shell: bash
 
-      - name: Install dependencies
+      - name: Configure Poetry to not create virtual environments
         run: |
-          poetry --version
-          poetry install
+          poetry config virtualenvs.create false
 
-      - name: Run black check
+      - name: Install dependencies without installing the current project
+        run: |
+          poetry install --no-root
+
+      - name: Run Black check
         run: |
           poetry run black --check .
 
